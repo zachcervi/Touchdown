@@ -11,7 +11,7 @@ struct TopDetailView: View {
     //MARK: - PROPERTIES
     
     @State private var isAnimating: Bool = false
-    
+    @EnvironmentObject var shop: Shop
     //MARK: - BODY
     var body: some View {
         HStack(alignment: .center, spacing: 6, content: {
@@ -20,7 +20,7 @@ struct TopDetailView: View {
                 Text("Price")
                     .fontWeight(.semibold)
                 
-                Text(sampleProduct.formattedPrice)
+                Text(shop.selectedProduct?.formattedPrice ?? sampleProduct.formattedPrice)
                     .font(.largeTitle)
                     .fontWeight(.black)
                     .scaleEffect(1.35, anchor: .leading)
@@ -28,7 +28,7 @@ struct TopDetailView: View {
             .offset(y: isAnimating ? -50 : -75)
             Spacer()
             //PHOTO
-            Image(sampleProduct.image)
+            Image(shop.selectedProduct?.image ?? sampleProduct.image)
                 .resizable()
                 .scaledToFit()
                 .offset(y: isAnimating ? 0 : -35)
@@ -47,5 +47,6 @@ struct TopDetailView_Previews: PreviewProvider {
         TopDetailView()
             .previewLayout(.sizeThatFits)
             .padding()
+            .environmentObject(Shop())
     }
 }
